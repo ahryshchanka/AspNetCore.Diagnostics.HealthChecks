@@ -30,6 +30,7 @@
     <MicrosoftAzureCosmosDB>3.2.0</MicrosoftAzureCosmosDB>
     <MicrosoftAzureEventHubs>4.1.0</MicrosoftAzureEventHubs>
     <MicrosoftAzureServiceBus>4.0.0</MicrosoftAzureServiceBus>
+    <MicrosoftAzureDevicesProvisioningService>1.5.0</MicrosoftAzureDevicesProvisioningService>
     <MicrosoftEntityFrameworkCore>3.0.0</MicrosoftEntityFrameworkCore>
     <MicrosoftEntityFrameworkCoreDesign>3.0.0</MicrosoftEntityFrameworkCoreDesign>
     <MicrosoftEntityFrameworkCoreSqlite>3.0.0</MicrosoftEntityFrameworkCoreSqlite>
@@ -115,5 +116,6 @@
     <HealthCheckSignalR>3.0.0</HealthCheckSignalR>
     <HealthCheckCloudFirestore>3.0.0</HealthCheckCloudFirestore>
     <HealthCheckIoTHub>3.0.0</HealthCheckIoTHub>
+    <HealthCheckDevicesProvisioningService>3.0.0</HealthCheckDevicesProvisioningService>
   </PropertyGroup>
 </Project>
