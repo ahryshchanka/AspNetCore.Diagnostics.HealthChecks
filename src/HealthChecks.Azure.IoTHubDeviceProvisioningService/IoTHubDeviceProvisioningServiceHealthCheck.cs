@@ -16,7 +16,30 @@ namespace HealthChecks.Azure.IoTHubDeviceProvisioningService
         {
             try
             {
-                throw new NotImplementedException();
+                if (_options.ServiceConnectionCheck)
+                {
+                    await ExecuteServiceConnectionCheckAsync(cancellationToken);
+                }
+
+                if (_options.EnrollmentWriteCheck)
+                {
+                    await ExecuteEnrollmentWriteCheckAsync(cancellationToken);
+                }
+                else if (_options.EnrollmentReadCheck)
+                {
+                    await ExecuteEnrollmentWriteCheckAsync(cancellationToken);
+                }
+
+                if (_options.RegistrationStatusWriteCheck)
+                {
+                    await ExecuteRegistryWriteCheckAsync(cancellationToken);
+                }
+                else if (_options.RegistrationStatusReadCheck)
+                {
+                    await ExecuteRegistryReadCheckAsync(cancellationToken);
+                }
+
+                return HealthCheckResult.Healthy();
             }
             catch (Exception ex)
             {
