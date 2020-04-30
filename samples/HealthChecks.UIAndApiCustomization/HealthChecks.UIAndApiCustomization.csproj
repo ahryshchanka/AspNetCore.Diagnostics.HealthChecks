@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\HealthChecks.Azure.IoTHubDeviceProvisioningService\HealthChecks.Azure.IoTHubDeviceProvisioningService.csproj" />
     <ProjectReference Include="..\..\src\HealthChecks.UI.Client\HealthChecks.UI.Client.csproj" />
     <ProjectReference Include="..\..\src\HealthChecks.UI\HealthChecks.UI.csproj" />
     <ProjectReference Include="..\..\src\HealthChecks.Uris\HealthChecks.Uris.csproj" />

@@ -27,9 +27,12 @@ namespace HealthChecks.UIAndApi
                 //                        .SetEvaluationTimeInSeconds(16);
                 //                })
                 .AddHealthChecks()
-                .AddUrlGroup(new Uri("http://httpbin.org/status/200"), name: "uri-1")
-                .AddUrlGroup(new Uri("http://httpbin.org/status/200"), name: "uri-2")
-                .AddUrlGroup(new Uri("http://httpbin.org/status/500"), name: "uri-3")
+                //.AddUrlGroup(new Uri("http://httpbin.org/status/200"), name: "uri-1")
+                //.AddUrlGroup(new Uri("http://httpbin.org/status/200"), name: "uri-2")
+                //.AddUrlGroup(new Uri("http://httpbin.org/status/500"), name: "uri-3")
+                .AddAzureIoTHubDeviceProvisioningService(options => options
+                    .AddConnectionString("HostName=test-iot-hub-dps.azure-devices-provisioning.net;SharedAccessKeyName=ew;SharedAccessKey=9LxKT4DX05uK89WkOUNCuzbmF4WWn/rLPz05qs3hnO8=")
+                    .AddEnrollmentWriteCheck())
                 .Services
                 .AddControllers();
         }

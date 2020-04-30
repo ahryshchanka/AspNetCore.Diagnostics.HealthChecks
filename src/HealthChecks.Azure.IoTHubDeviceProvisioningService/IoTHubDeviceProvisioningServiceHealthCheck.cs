@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Devices.Provisioning.Service;
@@ -56,12 +59,31 @@ namespace HealthChecks.Azure.IoTHubDeviceProvisioningService
                 {
                 }
 
+                Attestation attestation = null;
+                var assembly = typeof(IoTHubDeviceProvisioningServiceHealthCheck).Assembly;
+                using (var stream = assembly.GetManifestResourceStream("HealthChecks.Azure.IoTHubDeviceProvisioningService.health-checks.default.cer"))
+                {
+                    byte[] bytes = new byte[stream.Length];
+                    await stream.ReadAsync(bytes, (int) stream.Length, (int) stream.Length, cancellationToken);
+                    
+                    var certificate = new X509Certificate2();
+                    certificate.Import(
+                        bytes,
+                        string.Empty,
+                        X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable | X509KeyStorageFlags.DefaultKeySet |
+                        X509KeyStorageFlags.UserKeySet |
+                        X509KeyStorageFlags.UserProtected |
+                        X509KeyStorageFlags.PersistKeySet);
+
+                    attestation = X509Attestation.CreateFromClientCertificates(certificate);
+                }
+
                 // in default implementation of configuration enrollment group id equals "health-check-write-enrollment-group-id"
                 // if in previous health check enrollment group were not removed -- try remove it
                 // if in previous health check enrollment group were added and removed -- try create and remove it
                 if (enrollmentGroup == null)
                 {
-                    enrollmentGroup = new EnrollmentGroup(enrollmentGroupId, new TpmAttestation("endorsementKey"));
+                    enrollmentGroup = new EnrollmentGroup(enrollmentGroupId, attestation);
                     await client.CreateOrUpdateEnrollmentGroupAsync(enrollmentGroup, cancellationToken);
                 }
 
